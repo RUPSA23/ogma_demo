@@ -7,7 +7,7 @@ const {
 exports.getaddResource = (req, res, next) => {
   res.render('kanban/addkanban', {
     path: '/addResource',
-    pageTitle: 'Add Resource',
+    pageTitle: 'Add Task',
     editing: false,
     hasError: false,
     errorMessage: null,
@@ -23,7 +23,7 @@ exports.postaddResource = (req, res, next) => {
   if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(422).render('kanban/addkanban', {
-      pageTitle: 'Add Resource',
+      pageTitle: 'Add Task',
       path: '/addResource',
       editing: false,
       hasError: true,
@@ -55,7 +55,7 @@ exports.getResources = async(req, res, next) => {
     .then(resources => {
       res.render('kanban/allkanban', {
         allResources: resources,
-        pageTitle: 'All Kanbans',
+        pageTitle: 'All Tasks',
         path: '/',
       });
     })
@@ -88,7 +88,7 @@ exports.getEditResource = (req, res, next) => {
         return res.redirect('/');
       }
       res.render('kanban/addkanban', {
-        pageTitle: 'Edit Resource',
+        pageTitle: 'Edit Task',
         path: '/edit-resource',
         editing: editModez,
         resource: resource,
@@ -110,7 +110,7 @@ exports.postEditResource = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     return res.status(422).render('kanban/addkanban', {
-      pageTitle: 'Edit Resource',
+      pageTitle: 'Edit Task',
       path: 'EditResource',
       editing: true,
       hasError: true,
@@ -147,7 +147,7 @@ exports.getAdminResources = (req, res, next) => {
     .then(re => {
       res.render('kanban/adminkanban', {
         AllAdminResources: re,
-        pageTitle: 'My Resources',
+        pageTitle: 'My Tasks',
         path: '/Admin-resource'
       });
     })
@@ -178,7 +178,7 @@ exports.getSearch = (req, res, next) => {
     .then(result => {
       res.render('kanban/allkanban', {
         allResources : result,
-        pageTitle: 'All Resources',
+        pageTitle: 'All Tasks',
         path: '/'
       });
     })
