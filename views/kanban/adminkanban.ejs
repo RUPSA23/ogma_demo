@@ -1,0 +1,58 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (AllAdminResources.length > 0) { %>
+        <div class="grid">
+            <% for (let resource of AllAdminResources) { %>
+            <article class="card product-item 
+            <% if (resource.status == "completed") { %>
+                completedCard
+            <% } else if (resource.status == "approved") { %> 
+                approvedCard
+            <% } %>
+            ">
+                <header class="card__header">
+                    <h1 class="product__title">
+                        <%= resource.title %>
+                    </h1>
+                </header>
+                <div class="card__content">
+                    <p class="product__description">
+                        <%= resource.description %>
+                    </p>
+                </div>
+                <% if (resource.status == "approved") { %>
+                <div class="card__content">
+                    <p class="product__description"><b>Developed By <br><%= resource.developerAssigned.name %></b></p>
+                </div>
+                <% } %>
+                <% if (resource.status != "approved") { %>
+                <div class="card__actions">
+                    <a href="/update-resource/<%= resource._id %>?edit=true" class="btn">Edit</a>
+                    <form action="/delete-resource" method="POST">
+                        <input type="hidden" value="<%= resource._id %>" name="kanbanId">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                    <% if (resource.status == "completed") { %>
+                    <form action="/kanbanApproval" method="POST">
+                        <input type="hidden" value="<%= resource._id %>" name="kanbanId">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="btn" type="submit">Approve</button>
+                    </form>
+                    <% } %>
+                </div>
+                <% } %>
+
+            </article>
+            <% } %>
+        </div>
+        <% } else { %>
+        <h1>No Task Found!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>

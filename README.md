@@ -1,1 +1,2 @@
-# ogma_demo
+# fl-kanban-app
+Freelance Kanban Dashboard

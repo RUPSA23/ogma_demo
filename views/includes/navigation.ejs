@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+/* 
+    form.example button:hover {
+        background: #0b7dda;
+    } */
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .wrapper {
+        border: 2px solid #000;
+        display: inline-block;
+    }
+
+    form.input,
+    form.button {
+        height: 10px;
+        background-color: transparent;
+        border: 0;
+    }
+</style>
+
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">All Tasks</a>
+            </li>
+
+
+            <% if (isAuthenticated ) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/addResource' ? 'active' : '' %>" href="/addResource">Add Task
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/Admin-resource' ? 'active' : '' %>" href="/admin/resources">My Task
+                </a>
+            </li>
+            <% } %>
+        </ul>
+        <ul class="main-header__item-list">
+            <% if (!isAuthenticated) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
+            <% } else { %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+</header>

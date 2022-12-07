@@ -1,0 +1,36 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="product-form" action="/<% if (editing) { %>update-resource<% } else { %>addResource<% } %>" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input
+                class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : '' %>"
+                 type="text" name="title" id="title" value="<% if (editing || hasError) { %><%= resource.title %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea
+                class="<%= validationErrors.find(e => e.param === 'kanban') ? 'invalid' : '' %>"
+                 name="description" id="description" rows="5"> <% if (editing || hasError) { %><%= resource.description %><% } %></textarea>
+            </div>
+
+            <% if (editing) { %>
+            <input type="hidden" value="<%= resource._id %>" name="kanbanId">
+            <%  } %>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %> Update Task <% } else { %>Add Task<% } %></button>
+        </form>
+
+    </main>
+
+
+    <%- include('../includes/end.ejs') %>
